@@ -8,11 +8,17 @@ export class UsersService {
   constructor(private prisma: PrismaService) {}
 
   create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+    return this.prisma.user.create({
+      data: { email: '', name: createUserDto + '' },
+    });
   }
 
   findAll() {
     return this.prisma.user.findMany({});
+  }
+
+  findByEmail(email: string) {
+    return this.prisma.user.findFirst({ where: { email: email } });
   }
 
   findOne(id: number) {
@@ -20,7 +26,7 @@ export class UsersService {
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+    return `This action updates a #${id} user` + updateUserDto;
   }
 
   remove(id: number) {
